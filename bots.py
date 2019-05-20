@@ -77,6 +77,8 @@ def getOpenOrders():
                 order_price = order.get('price')
                 order_refer_price = order_price / (1 - float(BUY_RATE))
                 if order_refer_price < float(calcPrice['buyPrice']):
+                    if wallet.unlocked() == False:
+                        wallet.unlock(PASSWD)
                     market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel buy order]', order)
@@ -88,6 +90,8 @@ def getOpenOrders():
                 order_price = order.invert().get('price')
                 order_refer_price = order_price / (1 - float(SELL_RATE))
                 if order_refer_price > float(calcPrice['sellPrice']):
+                    if wallet.unlocked() == False:
+                        wallet.unlock(PASSWD)
                     market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel buy order]', order)
