@@ -77,7 +77,7 @@ def getOpenOrders():
                 order_price = order.get('price')
                 order_refer_price = order_price / (1 - float(BUY_RATE))
                 if order_refer_price < float(calcPrice['buyPrice']):
-                    market.cancel(order_id)
+                    market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel buy order]', order)
                     print('refer_price:', order_refer_price, 'new_price:', calcPrice['buyPrice'])
@@ -88,7 +88,7 @@ def getOpenOrders():
                 order_price = order.invert().get('price')
                 order_refer_price = order_price / (1 - float(SELL_RATE))
                 if order_refer_price > float(calcPrice['sellPrice']):
-                    market.cancel(order_id)
+                    market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel buy order]', order)
                     print('refer_price:', order_refer_price, 'new_price:', calcPrice['sellPrice'])
