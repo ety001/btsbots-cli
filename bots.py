@@ -59,7 +59,7 @@ def getPrice():
 
 # get open orders
 def getOpenOrders():
-    global market, ACCOUNT, assets, calcPrice, BUY_RATE, SELL_RATE
+    global market, ACCOUNT, assets, calcPrice, BUY_RATE, SELL_RATE, PASSWD
     #print(assets, calcPrice)
     openOrders = market.accountopenorders(ACCOUNT)
     #print(openOrders)
