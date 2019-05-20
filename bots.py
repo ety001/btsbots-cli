@@ -132,6 +132,7 @@ def main():
         except Exception as e:
             print('=== ERROR ===')
             print(e)
+            traceback.print_exc()
             print('=============')
         time.sleep(3)
 
