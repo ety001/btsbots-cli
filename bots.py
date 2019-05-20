@@ -38,6 +38,10 @@ if wallet.getPublicKeys() == []:
     wallet.create(PASSWD)
     wallet.addPrivateKey(PRIV_KEY)
 
+#print(wallet.unlocked())
+#wallet.unlock(PASSWD)
+#print(wallet.unlocked())
+
 print("==="+MARKET+"===")
 market = Market(MARKET)
 
@@ -59,7 +63,7 @@ def getPrice():
 
 # get open orders
 def getOpenOrders():
-    global market, ACCOUNT, assets, calcPrice, BUY_RATE, SELL_RATE, PASSWD
+    global wallet, market, ACCOUNT, assets, calcPrice, BUY_RATE, SELL_RATE, PASSWD
     #print(assets, calcPrice)
     openOrders = market.accountopenorders(ACCOUNT)
     #print(openOrders)
