@@ -92,13 +92,13 @@ def getOpenOrders():
             else:
                 # sell order
                 order_price = order.invert().get('price')
-                order_refer_price = order_price / (1 - float(SELL_RATE))
+                order_refer_price = order_price / (1 + float(SELL_RATE))
                 if order_refer_price > float(calcPrice['sellPrice']):
                     if market.bitshares.wallet.unlocked() == False:
                         market.bitshares.wallet.unlock(PASSWD)
                     market.cancel(order_id, account=ACCOUNT)
                     print('------')
-                    print('[cancel buy order]', order)
+                    print('[cancel sell order]', order)
                     print('refer_price:', order_refer_price, 'new_price:', calcPrice['sellPrice'])
                     print('------')
                 result['sell'].append(order)
@@ -130,12 +130,12 @@ def main():
                 if b['base'] > float(BASE_MAX):
                     print('[base asset too much]')
                 else:
-                    if float(SELL_AMOUNT) > b['base']:
-                        print('[you have not enough base amount to buy]')
+                    quoteAmount = float(SELL_AMOUNT) / float(calcPrice['sellPrice'])
+                    if quoteAmount > b['quote']:
+                        print('[you have not enough quote amount to sell]')
                     else:
                         if market.bitshares.wallet.unlocked() == False:
                             market.bitshares.wallet.unlock(PASSWD)
-                        quoteAmount = float(SELL_AMOUNT) / float(calcPrice['sellPrice'])
                         market.sell(price=float(calcPrice['sellPrice']), amount=quoteAmount, account=ACCOUNT)
         except Exception as e:
             print('=== ERROR ===')
