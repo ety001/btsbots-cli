@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import json, os, sys, time, pprint
+import json, os, sys, time, pprint, traceback
 from contextlib import suppress
 from bitshares import BitShares
 from bitshares.market import Market
