@@ -142,7 +142,7 @@ def main():
             print(e)
             traceback.print_exc()
             print('=============')
-        time.sleep(3)
+        time.sleep(5)
 
 if __name__ == '__main__':
     with suppress(KeyboardInterrupt):
