@@ -109,13 +109,14 @@ def main():
     while True:
         try:
             b = getBalance()
-            #print(b)
+            print(b)
             calcPrice = getPrice()
-            #print(calcPrice)
+            print(calcPrice)
             openOrders = getOpenOrders()
-            #print(openOrders)
+            print(openOrders)
             #openOrders = {'buy': [], 'sell': []}
             if openOrders['buy'] == []:
+                print('get in buy process')
                 if b['quote'] > float(QUOTE_MAX):
                     print('[quote asset too much]')
                 else:
@@ -126,7 +127,12 @@ def main():
                             market.bitshares.wallet.unlock(PASSWD)
                         quoteAmount = float(BUY_AMOUNT) / float(calcPrice['buyPrice'])
                         market.buy(price=float(calcPrice['buyPrice']), amount=quoteAmount, account=ACCOUNT)
+                        print('make buy order success! -->')
+                        print(float(calcPrice['buyPrice']))
+                        print(quoteAmount)
+                        print('<--')
             if openOrders['sell'] == []:
+                print('get in sell process')
                 if b['base'] > float(BASE_MAX):
                     print('[base asset too much]')
                 else:
@@ -137,6 +143,10 @@ def main():
                         if market.bitshares.wallet.unlocked() == False:
                             market.bitshares.wallet.unlock(PASSWD)
                         market.sell(price=float(calcPrice['sellPrice']), amount=quoteAmount, account=ACCOUNT)
+                        print('make sell order success! -->')
+                        print(float(calcPrice['sellPrice']))
+                        print(quoteAmount)
+                        print('<--')
         except Exception as e:
             print('=== ERROR ===')
             print(e)
