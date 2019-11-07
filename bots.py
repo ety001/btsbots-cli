@@ -21,6 +21,14 @@ SELL_AMOUNT = env_dict.get('SELL_AMOUNT')
 QUOTE_MAX = env_dict.get('QUOTE_MAX')
 BASE_MAX = env_dict.get('BASE_MAX')
 ACCOUNT = env_dict.get('ACCOUNT')
+CANCEL_RATE = env_dict.get('CANCEL_RATE')
+
+if CANCEL_RATE == '':
+    CANCEL_RATE = 1.0
+
+print('CANCEL_RATE':)
+print(CANCEL_RATE)
+print('')
 
 calcPrice = {}
 openOrders = []
@@ -79,7 +87,7 @@ def getOpenOrders():
             if sym == assets[1]:
                 # buy order
                 order_price = order.get('price')
-                order_refer_price = order_price / (1 - float(BUY_RATE))
+                order_refer_price = order_price / (1 - float(CANCEL_RATE) * float(BUY_RATE))
                 if order_refer_price < float(calcPrice['buyPrice']):
                     if market.bitshares.wallet.unlocked() == False:
                         market.bitshares.wallet.unlock(PASSWD)
@@ -92,7 +100,7 @@ def getOpenOrders():
             else:
                 # sell order
                 order_price = order.invert().get('price')
-                order_refer_price = order_price / (1 + float(SELL_RATE))
+                order_refer_price = order_price / (1 + float(CANCEL_RATE) * float(SELL_RATE))
                 if order_refer_price > float(calcPrice['sellPrice']):
                     if market.bitshares.wallet.unlocked() == False:
                         market.bitshares.wallet.unlock(PASSWD)
