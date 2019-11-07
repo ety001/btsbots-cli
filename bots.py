@@ -26,7 +26,7 @@ CANCEL_RATE = env_dict.get('CANCEL_RATE')
 if CANCEL_RATE == '':
     CANCEL_RATE = 1.0
 
-print('CANCEL_RATE':)
+print('CANCEL_RATE: ')
 print(CANCEL_RATE)
 print('')
 
