@@ -28,7 +28,7 @@ if CANCEL_RATE == '':
 
 print('CANCEL_RATE: ')
 print(CANCEL_RATE)
-print('')
+print(' ')
 
 calcPrice = {}
 openOrders = []
@@ -160,6 +160,8 @@ def main():
             print(e)
             traceback.print_exc()
             print('=============')
+        print('sleep 5 seconds')
+        print('---------------')
         time.sleep(5)
 
 if __name__ == '__main__':
