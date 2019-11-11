@@ -37,7 +37,7 @@ assets = MARKET.split(':')
 
 bitshares = BitShares(API_URL)
 wallet = bitshares.wallet
-account = Account(ACCOUNT)
+account = Account(ACCOUNT, blockchain_instance=bitshares)
 
 
 # create wallet
@@ -51,7 +51,7 @@ if wallet.getPublicKeys() == []:
 #print(wallet.unlocked())
 
 print("==="+MARKET+"===")
-market = Market(MARKET)
+market = Market(MARKET, blockchain_instance=bitshares)
 
 # get balance
 def getBalance():
