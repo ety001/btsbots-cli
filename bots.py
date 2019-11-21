@@ -11,7 +11,6 @@ env_dict = os.environ
 #print(env_dict)
 API_URL = env_dict.get('API_URL')
 PRIV_KEY = env_dict.get('PRIV_KEY')
-PASSWD = env_dict.get('PASSWD')
 #quote:base
 MARKET = env_dict.get('MARKET')
 BUY_RATE = env_dict.get('BUY_RATE')
@@ -35,20 +34,8 @@ openOrders = []
 #quote:base
 assets = MARKET.split(':')
 
-bitshares = BitShares(API_URL)
-wallet = bitshares.wallet
+bitshares = BitShares(API_URL, keys=PRIV_KEY)
 account = Account(ACCOUNT, blockchain_instance=bitshares)
-
-
-# create wallet
-print(bitshares.wallet.getPublicKeys())
-if wallet.getPublicKeys() == []:
-    wallet.create(PASSWD)
-    wallet.addPrivateKey(PRIV_KEY)
-
-#print(wallet.unlocked())
-#wallet.unlock(PASSWD)
-#print(wallet.unlocked())
 
 print("==="+MARKET+"===")
 market = Market(MARKET, blockchain_instance=bitshares)
@@ -89,8 +76,6 @@ def getOpenOrders():
                 order_price = order.get('price')
                 order_refer_price = order_price / (1 - float(CANCEL_RATE) * float(BUY_RATE))
                 if order_refer_price < float(calcPrice['buyPrice']):
-                    if market.bitshares.wallet.unlocked() == False:
-                        market.bitshares.wallet.unlock(PASSWD)
                     market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel buy order]', order)
@@ -102,8 +87,6 @@ def getOpenOrders():
                 order_price = order.invert().get('price')
                 order_refer_price = order_price / (1 + float(CANCEL_RATE) * float(SELL_RATE))
                 if order_refer_price > float(calcPrice['sellPrice']):
-                    if market.bitshares.wallet.unlocked() == False:
-                        market.bitshares.wallet.unlock(PASSWD)
                     market.cancel(order_id, account=ACCOUNT)
                     print('------')
                     print('[cancel sell order]', order)
@@ -131,8 +114,6 @@ def main():
                     if float(BUY_AMOUNT) > b['base']:
                         print('[you have not enough base amount to buy]')
                     else:
-                        if market.bitshares.wallet.unlocked() == False:
-                            market.bitshares.wallet.unlock(PASSWD)
                         quoteAmount = float(BUY_AMOUNT) / float(calcPrice['buyPrice'])
                         market.buy(price=float(calcPrice['buyPrice']), amount=quoteAmount, account=ACCOUNT)
                         print('make buy order success! -->')
@@ -148,8 +129,6 @@ def main():
                     if quoteAmount > b['quote']:
                         print('[you have not enough quote amount to sell]')
                     else:
-                        if market.bitshares.wallet.unlocked() == False:
-                            market.bitshares.wallet.unlock(PASSWD)
                         market.sell(price=float(calcPrice['sellPrice']), amount=quoteAmount, account=ACCOUNT)
                         print('make sell order success! -->')
                         print(float(calcPrice['sellPrice']))
